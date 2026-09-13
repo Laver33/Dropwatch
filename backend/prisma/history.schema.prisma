@@ -1,0 +1,11 @@
+
+
+
+model PriceHistory {
+  id        Int      @id @default(autoincrement())
+  productName String
+  productId Int
+  price     Float
+  checkedAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}

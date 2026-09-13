@@ -1,0 +1,16 @@
+
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  name        String
+
+  url         String   
+  targetPrice Float    
+  currentPrice Float?  
+  lastChecked DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  history     PriceHistory[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
