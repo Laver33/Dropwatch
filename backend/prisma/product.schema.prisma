@@ -1,8 +1,7 @@
 
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  userId      Int
+  id        String      @id @default(cuid())
   name        String
 
   url         String   
@@ -12,5 +11,7 @@ model Product {
   createdAt   DateTime @default(now())
 
   history     PriceHistory[]
+
+  userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

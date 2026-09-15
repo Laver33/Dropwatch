@@ -3,12 +3,21 @@ import "dotenv/config";
 import helmet from "@fastify/helmet";
 import cors from "@fastify/cors";
 import { registerRoutes } from "./routes";
+import fastifyJwt from "@fastify/jwt";
 
 const app = Fastify({
   logger: true,
 });
 
+if (!process.env.JWT_SECRET) {
+  throw new Error("Не получен JWT_SECRET с ");
+}
+
 await app.register(helmet);
+await app.register(fastifyJwt, {
+  secret: process.env.JWT_SECRET,
+});
+
 await app.register(cors, {
   origin: "http://localhost:5173",
   credentials: true,
@@ -25,4 +34,8 @@ const start = async () => {
     process.exit(1);
   }
 };
-start();
+
+start().catch((e) => {
+  app.log.error(e);
+  process.exit(1);
+});

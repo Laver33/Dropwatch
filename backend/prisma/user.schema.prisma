@@ -1,7 +1,7 @@
 
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   telegramId Int?    @unique
   email     String   @unique
   password  String
