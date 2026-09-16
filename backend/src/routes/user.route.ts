@@ -3,7 +3,7 @@ import * as userController from "../controllers/user.js";
 import { registerBodySchema } from "../validators/register.validator";
 
 export async function userRoutes(fastify: FastifyInstance) {
-  // Регистрация
+  // Регистрация ( + )
   fastify.post(
     "/register",
     {
@@ -14,7 +14,7 @@ export async function userRoutes(fastify: FastifyInstance) {
     userController.register,
   );
 
-  // Вход
+  // Вход ( + )
   fastify.get(
     "/login",
     {
@@ -25,6 +25,6 @@ export async function userRoutes(fastify: FastifyInstance) {
     userController.login,
   );
 
-  // Получение пользователя по айди
-  fastify.get("/user/:id", userController.test);
+  // Получение пользователя по айди ( + )
+  fastify.get("/user/:id", userController.userById);
 }

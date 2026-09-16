@@ -3,8 +3,28 @@ import type { Register } from "../validators/register.validator";
 import { prisma } from "../lib/prisma";
 import bcrypt from "bcrypt";
 
-export const test = async (request: FastifyRequest, reply: FastifyReply) => {
-  reply.send({ message: "Hello World" });
+export const userById = async (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+) => {
+  try {
+    const { id } = request.params;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) {
+      return reply.status(404).send({ message: "Пользователь не найден" });
+    }
+
+    return reply.status(200).send(user);
+  } catch (err) {
+    request.log.error(err);
+    return reply.status(500).send({ message: "Error userById" });
+  }
 };
 
 export const login = async (
